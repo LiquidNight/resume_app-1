@@ -1,0 +1,342 @@
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+
+
+#wrapper {
+    width: 90%;
+    margin: auto;
+}
+
+h1 {
+    font: bold 36px Georgia; 
+    float: left;
+    padding: 10px 20px;
+}
+
+nav {
+    padding: 10px 20px;
+}
+  
+nav li {
+    font: 14px Arial;
+    padding: 10px;
+    float: right;
+    display: inline;
+}       
+
+li a {  
+    color:#000;
+    text-decoration:none;
+} 
+
+li a:hover {
+    color: #CC333F;
+}
+
+#header_border, #footer_border {
+    border-bottom: 2px solid #CC333F;
+} 
+
+#subheader {
+    position:relative;
+    height: 50px;
+}
+
+#subheader ul {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+#subheader li {
+    font: 12px Arial;
+    padding: 10px;
+    display:inline;
+    
+}
+
+#subheader h2 {
+    font: bold 24px Georgia; 
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+/* BEGIN LEFT COLUMN */           
+#left_column {
+    width: 28%;
+    padding-left: 2%;
+    padding-right: 2%;
+    float:left;
+   
+}
+
+.name {
+    font: bold 20px Georgia;
+    width:100%;
+    float:left;
+    padding-bottom: 6px;
+   
+}
+
+#name_first {
+    float: left;
+    padding-right: 10px;
+}
+
+#name_last {
+    float: left;
+}
+
+.contact {
+    font: 14px/22px Arial;
+}
+
+.address {
+    font: .8em Arial;
+
+}
+
+#street {
+}           
+
+#city {
+    float: left;
+    padding-right: 10px;
+}      
+
+#state {
+    float: left;
+}      
+
+.social {
+    padding-top: 10px;
+}   
+
+#twitter{
+    float: left;
+}      
+
+#linked_in{
+    float: left;
+    padding-left: 10px;
+}    
+/* END LEFT COLUMN */ 
+
+/* BEGIN RIGHT COLUMN */   
+
+#right_column {
+    width: 65%;
+    padding-left: 2%;
+    float:right;
+    
+}
+
+#right_column h3 {
+    font: bold 20px Georgia; 
+    margin-bottom: 6px;
+   /* background-color: #CC333F;
+    border-radius: 8%;
+    padding: 15px 10px;*/
+}
+
+#right_column h4 {
+    font: bold 16px Verdana;
+}
+
+#right_column tr {
+    font: 14px Verdana;
+}
+
+#right_column td {
+    padding-bottom: 2px;
+    padding-right: 10px;
+}
+
+/* begin skills specific */
+#skill {
+    width: 100%;
+   
+}
+
+#skill div, h4{
+    margin-bottom: 5px;
+}
+
+.category {
+    float: left;
+    width: 50%;
+}
+
+.category:last-child {
+    margin-right:50%;
+}
+
+.skill_item {
+    width: 100%;
+    
+
+}
+.skill_item .title {
+    float: left;
+    width: 70%;
+}
+
+.title_experience {
+    float: left;
+    width: 25%;
+}
+/* end skills specific */
+
+/* begin dates */
+.start_month_year {
+    width: 10%;
+    float: left; 
+}
+
+.end_month_year {
+    width: 10%;
+    float: left;
+}
+/* end dates */
+
+/* begin work experience specific */
+#experience div, h5, li{
+    margin-bottom: 5px;
+}
+
+#experience li{
+    padding-left: 15px;
+}
+
+#experience h5{
+    font-weight: bold;
+}
+
+.work_category {
+    width: 100%;
+}
+
+.role {
+    float: left;
+    width: 40%;
+    font-size: 1.0em;
+    font-weight: bold; 
+}
+
+.project {
+    width: 40%;
+    float: left;
+}
+
+.organization {
+    width: 40%;
+    float: left;
+}
+
+.location {
+    width: 60%;
+    float: left; 
+}
+
+.responsibilities {
+    width: 100%;
+}
+.responsibilities li {
+    padding-bottom: 5px;
+}
+
+.responsibilities h5 {
+    float: left;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+/* end work experience specific */
+
+/* begin education specific */
+.education_category {
+    width: 100%;
+    padding-bottom: 75px;   
+}
+
+.degree {
+    width: 30%;
+    float:left; 
+}
+
+.major {
+    width: 50%;
+    float:left; 
+     
+}
+
+.minor_label {
+    width: 10%;
+    float:left; 
+}
+
+.minor {
+    width: 90%;
+    float:left; 
+}
+
+.schools_name {
+    width: 70%;
+    float:left;
+}
+
+/* end education specific */
+
+
+/* begin award specific */
+.accomplishment_category {
+    width: 100%;
+    padding-bottom: 75px;   
+}
+
+.accomplishment_category .title {
+    width: 80%;
+    float:left;
+    
+     
+}
+
+.month_year {
+    width: 20%;
+    float:left;
+     
+}
+
+.accomplishment_category.description {
+    width: 100%;
+    float:left;
+}
+
+/* end award specific */
+
+
+/* END RIGHT COLUMN */ 
+
+
+
+footer {
+    height: 40px;
+}
+
+footer #copy {
+    font: 11px Arial;
+    float: right;
+    padding-right: 20px;
+    padding-top: 25px;
+}
+
