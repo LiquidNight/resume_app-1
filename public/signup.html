@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>	
+        <title>Signup - Resume Database</title>
+            <link rel="stylesheet" href="css/normalize.css">
+    <!--    <link rel="stylesheet" href="css/reset.css">  -->
+	<!--	<link rel="stylesheet" href="css/style.css"> -->
+
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+        <script>
+            
+        </script>
+        <style>
+            label {
+                display: inline-block;
+                width: 160px;
+                text-align: right;
+            }
+
+            ul, li {
+                list-style: none;
+            }
+        </style>
+
+	</head>
+	<body>
+        <div id="fb-root"></div>
+          <script>
+            window.fbAsyncInit = function() {
+                // init the FB JS SDK
+                FB.init({
+                  appId      : '563765890333626',                        // App ID from the app dashboard
+                 // channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel file for x-domain comms
+                  status     : true,                                 // Check Facebook Login status
+                  xfbml      : true                                  // Look for social plugins on the page
+                });
+
+                // Additional initialization code such as adding Event Listeners goes here
+
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        console.log('Welcome!  Fetching your information.... ');
+                        FB.api('/me', function(response) {
+                            //I entered this code
+                            $('#name').val(response.name);   //val is an overloaded method
+                            console.log('Good to see you, ' + response.name + '.');
+                            console.log(response);
+                        });
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                }, {
+                    //note - added this to increase the scope
+                    /*
+                    you can do this another way:  
+                        FB.login(function(response) {
+                        
+                        }, {scope: 'email,user_likes'});
+                    */
+                    scope: 'email,user_likes'
+                });
+            };
+
+            // Load the SDK asynchronously
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+          </script>
+        <h1>Signup to add your resume.</h1>
+        <!--Form elements are considered inline block elements.
+                -Externally, they act like inline elements.
+                -Internally, you can set block like properties (height, width, etc...)
+        -->
+        <form>
+            <ul>
+                <li>
+                    <label for="name">Name</label>
+                    <input id="name" type="text" placeholder="e.g. John Smith" />
+                </li>
+                <li>
+                    <label for="degree">BS Degree</label>
+                    <input id="degree" type="checkbox" />
+                </li>
+                <li>
+                    <label for="summary">Bio</label>
+                    <textarea id="summary" value=""></textarea>
+                </li>
+                <li>
+                    <label for="dob">Birth Date</label>
+                    <input id="dob" type="date" />
+                </li>
+                <li>
+                    <label for="favcolor">Favorite Color</label>
+                    <input id="favcolor" type="color" />
+                </li>
+                <li>
+                    <label for="password">Password</label>
+                    <input id="password" type="password" />
+                </li>
+                <li>
+                    <label for="ready">Are you ready?</label>
+                    <select id="ready">                        <!-- requires children - <options> -->
+                        <option value="0">Yup</option>
+                        <option value="1">Nope</option>
+                     </select>
+                </li>
+                <li>
+                    <input type="submit" value="save &amp; continue" />
+                </li>
+            <ul>
+        </form>
+	</body>
+</html>
+
+ <script>
+   var name = $('input[type="text"]').val();
+   var degree = $('#degree')[0].checked;
+   var checked = $('#degree').is(':checked');
+   var dob = $('#dob').val();
+   var password = $('#password').val();
+   var ready = $('#ready').val();
+
+</script>

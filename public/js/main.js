@@ -1,3 +1,20 @@
+
+
+
+function generateHTML(data) {
+    var html = '';
+    for (i in data) {
+        html += '<div class="'+i+'">'+data[i]+'</div>';
+    }
+    return html;
+    //console.log(html);
+}
+
+
+
+
+
+
 $(document).ready(function() {
     $.ajax('api/resumes/51c208396b1642a626000001', {
         complete : function(response){
@@ -14,6 +31,11 @@ $(document).ready(function() {
             $('#zip_code').html(response.responseJSON.contact_info.street_address.zip_code);
             
             
+
+
+            //
+           // $('.classname').append('<p>InsertDataHere</p>');
+            
             lengthOfSkillArray = response.responseJSON.skill.length;
             
             for (i = 0; i < lengthOfSkillArray; i++) {
@@ -23,7 +45,7 @@ $(document).ready(function() {
                 $(currentCategory + ' .title_experience').html(response.responseJSON.skill[i].experience); 
             }  
 
-            lengthOfExperienceArray = response.responseJSON.experience.length;
+          /*  lengthOfExperienceArray = response.responseJSON.experience.length;
             if (lengthOfExperienceArray < 1) {
                 //Figure out real code to make this false.
                // ('#work_experience').visible = false; 
@@ -45,7 +67,28 @@ $(document).ready(function() {
 
 
                 }  
-            }  
+            } 
+
+            */
+
+            var justForKicks = generateHTML ({
+                                            role : 'My Role',
+                                            project : 'My Project',
+                                            start_month_year : 'My SMY',
+                                            end_month_year : 'My EMY',
+                                            organization : 'My Organization',
+                                            location : 'My Location'
+                                        });
+
+
+
+            console.log(justForKicks);
+            $('.work_category').append(justForKicks);
+        
+
+
+
+            /**************end experience *******/ 
 
             lengthOfSchoolsArray = response.responseJSON.schools.length;
             if (lengthOfSchoolsArray < 1) {
@@ -71,7 +114,7 @@ $(document).ready(function() {
                 for (i = 0; i < lengthOfAccomplishmentsArray; i++) {
 
                     var currentAccomplishment = '#accomplishment' + (i + 1);
-                    console.log(currentAccomplishment);
+                    //console.log(currentAccomplishment);
                     $(currentAccomplishment + ' .title').html(response.responseJSON.accomplishments[i].title); 
                     $(currentAccomplishment + ' .month_year').html(response.responseJSON.accomplishments[i].month_year); 
                     $(currentAccomplishment + ' .description').html(response.responseJSON.accomplishments[i].description); 
@@ -80,7 +123,7 @@ $(document).ready(function() {
 
             
             
-            console.log(response.responseJSON);
+          //  console.log(response.responseJSON);
         }
     });
 
