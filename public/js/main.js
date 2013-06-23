@@ -1,129 +1,139 @@
-
-
-
-function generateHTML(data) {
+function generateHTML(data, type) {
     var html = '';
-    for (i in data) {
-        html += '<div class="'+i+'">'+data[i]+'</div>';
+    if (type === 'div') {
+        for (i in data) {
+            html += '<div class="'+i+'">'+data[i]+'</div>';
+        }
+    } else if (type === 'li') {
+        for (i in data) {
+            html += '<li class="'+i+'">'+data[i]+'</li>';
+        }
     }
+   // console.log(html);
     return html;
-    //console.log(html);
 }
-
-
-
-
-
 
 $(document).ready(function() {
     $.ajax('api/resumes/51c208396b1642a626000001', {
         complete : function(response){
-            $('#name_first').html(response.responseJSON.name_first);
-            $('#name_last').html(response.responseJSON.name_last);
-            
-            $('#phone').html(response.responseJSON.contact_info.phone);
-            $('#email').html(response.responseJSON.contact_info.email);
-            
-            $('#website').html(response.responseJSON.website);
-
-            $('#street').html(response.responseJSON.contact_info.street_address.street);
-            $('#city').html(response.responseJSON.contact_info.street_address.city);
-            $('#zip_code').html(response.responseJSON.contact_info.street_address.zip_code);
-            
-            
-
-
-            //
-           // $('.classname').append('<p>InsertDataHere</p>');
-            
-            lengthOfSkillArray = response.responseJSON.skill.length;
-            
-            for (i = 0; i < lengthOfSkillArray; i++) {
-                var currentCategory = '#category' + (i + 1);
-                $(currentCategory + ' h4').html(response.responseJSON.skill[i].category); 
-                $(currentCategory + ' .title').html(response.responseJSON.skill[i].title); 
-                $(currentCategory + ' .title_experience').html(response.responseJSON.skill[i].experience); 
-            }  
-
-          /*  lengthOfExperienceArray = response.responseJSON.experience.length;
-            if (lengthOfExperienceArray < 1) {
-                //Figure out real code to make this false.
-               // ('#work_experience').visible = false; 
-            } else {
-                for (i = 0; i < lengthOfExperienceArray; i++) {
-                    var currentExperience = '#experience' + (i + 1);
-                    $(currentExperience + ' .role').html(response.responseJSON.experience[i].role); 
-                    $(currentExperience + ' .project').html(response.responseJSON.experience[i].project); 
-                    $(currentExperience + ' .start_month_year').html(response.responseJSON.experience[i].start_month_year); 
-                    $(currentExperience + ' .end_month_year').html(response.responseJSON.experience[i].end_month_year); 
-                    $(currentExperience + ' .organization').html(response.responseJSON.experience[i].organization); 
-                    $(currentExperience + ' .location').html(response.responseJSON.experience[i].location); 
-                    
-                    lengthOfResponsibilitiesArray = response.responseJSON.experience[i].responsibilities.length;
-                    
-                    for (h = 0; h < lengthOfResponsibilitiesArray; h++) {
-                          $(currentExperience + ' .r' + (h + 1)).html(response.responseJSON.experience[i].responsibilities[h]); 
-                    }
-
-
-                }  
-            } 
-
-            */
-
-            var justForKicks = generateHTML ({
-                                            role : 'My Role',
-                                            project : 'My Project',
-                                            start_month_year : 'My SMY',
-                                            end_month_year : 'My EMY',
-                                            organization : 'My Organization',
-                                            location : 'My Location'
-                                        });
-
-
-
-            console.log(justForKicks);
-            $('.work_category').append(justForKicks);
+        var resume = response.responseJSON;
+        $('#name_first').html(resume.name_first);
+        $('#name_last').html(resume.name_last);
         
+        $('#phone').html(resume.contact_info.phone);
+        $('#email').html(resume.contact_info.email);
+        
+        $('#website').html(resume.website);
 
+        $('#street').html(resume.contact_info.street_address.street);
+        $('#city').html(resume.contact_info.street_address.city);
+        $('#zip_code').html(resume.contact_info.street_address.zip_code);
+    
+/**************  BEGIN SKILLS     ********/       
+        lengthOfSkillArray = resume.skill.length;
+        for (var i = 0; i < lengthOfSkillArray; i++) {
+            var currentCategory = '#category' + (i + 1);
+            $(currentCategory + ' h4').html(resume.skill[i].category); 
+            $(currentCategory + ' .title').html(resume.skill[i].title); 
+            $(currentCategory + ' .title_experience').html(resume.skill[i].experience); 
+        }  
+/**************  END SKILLS     ********/ 
 
+/**************  BEGIN EXPERIENCE *******/ 
+        var lengthOfExperienceArray = resume.experience.length;
+        if (lengthOfExperienceArray < 1) {
+            console.log('This person has no work experience');
+            //Code to set visible css property == false;
+           // ('.experience').visible = false; 
+        } else {
+            for (var i = 0; i < lengthOfExperienceArray; i++) {
+                var role = resume.experience[i].role;
+                var project = resume.experience[i].project; 
+                var start_month_year = resume.experience[i].start_month_year; 
+                var end_month_year = resume.experience[i].end_month_year; 
+                var organization = resume.experience[i].organization; 
+                var location = resume.experience[i].location; 
+            
+                lengthOfResponsibilitiesArray = resume.experience[i].responsibilities.length;
+                var responsibilitiesObject = {};
+                for (var h = 0; h < lengthOfResponsibilitiesArray; h++) {
+                     responsibilitiesObject['responsibility' + 
+                                            (h)] = resume.experience[i].responsibilities[h];
+                }
 
-            /**************end experience *******/ 
+                var experienceDiv = generateHTML ({
+                                            'role' : role,
+                                            'project' : project,
+                                            'start_month_year' : start_month_year,
+                                            'end_month_year' : end_month_year,
+                                            'organization' : organization,
+                                            'location' : location
+                                        }, 'div');
 
-            lengthOfSchoolsArray = response.responseJSON.schools.length;
+                 
+               var responsibilitiesList = generateHTML (responsibilitiesObject, 'li');
+               var entireExperience = experienceDiv +
+                    '<div class="responsibilities, clearfix"><h5>Responsibilities</h5><ul>' + 
+                    responsibilitiesList + '</ul></div>';
+                
+                $('.experience').append(entireExperience);
+
+//Explore: can I do it this way using the commented out html and id's?   
+                // $('.experienceList').append(experienceDiv);
+               // $('.responsibilitiesList').append(responsibilitiesList);
+            }
+        }
+/************  END EXPERIENCE  *******/ 
+
+/************  BEGIN SCHOOLS   ******/
+            lengthOfSchoolsArray = resume.schools.length;
             if (lengthOfSchoolsArray < 1) {
                 //Figure out real code to make this false.
                // ('#education').visible = false; 
             } else {
-                for (i = 0; i < lengthOfSchoolsArray; i++) {
-                    var currentSchool = '#school' + (i + 1);
-                    $(currentSchool + ' .degree').html(response.responseJSON.schools[i].degree); 
-                    $(currentSchool + ' .major').html(response.responseJSON.schools[i].major); 
-                    $(currentSchool + ' .start_month_year').html(response.responseJSON.schools[i].start_month_year); 
-                    $(currentSchool + ' .end_month_year').html(response.responseJSON.schools[i].end_month_year); 
-                    $(currentSchool + ' .minor').html(response.responseJSON.schools[i].minor); 
-                    $(currentSchool + ' .schools_name').html(response.responseJSON.schools[i].name); 
+                for (var i = 0; i < lengthOfSchoolsArray; i++) {
+                    var degree = resume.schools[i].degree; 
+                    var major = resume.schools[i].major; 
+                    var start_month_year = resume.schools[i].start_month_year; 
+                    var end_month_year = resume.schools[i].end_month_year; 
+                    var minor = resume.schools[i].minor; 
+                    var school_name = resume.schools[i].name; 
+                    var gpa = resume.schools[i].gpa;
+                
+                    var educationDiv = generateHTML ({
+                                            'degree' : degree,
+                                            'major' : major,
+                                            'start_month_year' : start_month_year,
+                                            'end_month_year' : end_month_year,
+                                            'minor_label' : 'Minor',
+                                            'minor' : minor,
+                                            'school_name' : school_name,
+                                            'gpa_label' : 'GPA',
+                                            'gpa' : gpa
+                                        }, 'div');
+                    console.log(educationDiv);
+                    $('.education').append(educationDiv);
+
                 }  
             }  
-
-            lengthOfAccomplishmentsArray = response.responseJSON.accomplishments.length;
+/************  END SCHOOLS   ******/
+            lengthOfAccomplishmentsArray = resume.accomplishments.length;
             if (lengthOfAccomplishmentsArray < 1) {
                 //Figure out real code to make this false.
                // ('#education').visible = false; 
             } else {
-                for (i = 0; i < lengthOfAccomplishmentsArray; i++) {
+                for (var i = 0; i < lengthOfAccomplishmentsArray; i++) {
 
                     var currentAccomplishment = '#accomplishment' + (i + 1);
-                    //console.log(currentAccomplishment);
-                    $(currentAccomplishment + ' .title').html(response.responseJSON.accomplishments[i].title); 
-                    $(currentAccomplishment + ' .month_year').html(response.responseJSON.accomplishments[i].month_year); 
-                    $(currentAccomplishment + ' .description').html(response.responseJSON.accomplishments[i].description); 
+                    $(currentAccomplishment + ' .title').html(resume.accomplishments[i].title); 
+                    $(currentAccomplishment + ' .month_year').html(resume.accomplishments[i].month_year); 
+                    $(currentAccomplishment + ' .description').html(resume.accomplishments[i].description); 
                 }  
             }  
 
             
             
-          //  console.log(response.responseJSON);
+           console.log(resume);
         }
     });
 

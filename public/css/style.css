@@ -14,6 +14,10 @@
     margin: auto;
 }
 
+body div {
+    padding-bottom: 4px;
+}
+
 h1 {
     font: bold 36px Georgia; 
     float: left;
@@ -161,7 +165,7 @@ li a:hover {
 }
 
 /* begin skills specific */
-#skill {
+#skills {
     width: 100%;
    
 }
@@ -208,19 +212,19 @@ li a:hover {
 /* end dates */
 
 /* begin work experience specific */
-#experience div, h5, li{
+.experience div, h5, li{
     margin-bottom: 5px;
 }
 
-#experience li{
+.experience li{
     padding-left: 15px;
 }
 
-#experience h5{
+.experience h5{
     font-weight: bold;
 }
 
-.work_category {
+.experience {
     width: 100%;
 }
 
@@ -264,7 +268,7 @@ li a:hover {
 /* end work experience specific */
 
 /* begin education specific */
-.education_category {
+.education {
     width: 100%;
     padding-bottom: 75px;   
 }
@@ -290,9 +294,17 @@ li a:hover {
     float:left; 
 }
 
-.schools_name {
-    width: 70%;
+.school_name {
+    width: 30%;
     float:left;
+}
+.gpa_label {
+    width: 8%;
+    float: left;
+}
+.gpa {
+    width: 62%
+    float: left;
 }
 
 /* end education specific */
