@@ -32,10 +32,17 @@ $(document).ready(function() {
 /**************  BEGIN SKILLS     ********/       
         lengthOfSkillArray = resume.skill.length;
         for (var i = 0; i < lengthOfSkillArray; i++) {
-            var currentCategory = '#category' + (i + 1);
-            $(currentCategory + ' h4').html(resume.skill[i].category); 
-            $(currentCategory + ' .title').html(resume.skill[i].title); 
-            $(currentCategory + ' .title_experience').html(resume.skill[i].experience); 
+            var category = resume.skill[i].category; 
+            var skill_title = resume.skill[i].title; 
+            var skill_experience = resume.skill[i].experience + ' year(s)';
+
+            var skillsDiv = generateHTML ({
+                                            'category' : category,
+                                            'skill_title' : skill_title,
+                                            'skill_experience' : skill_experience
+                                        }, 'div');
+                    console.log(skillsDiv);
+                    $('.skill').append(skillsDiv); 
         }  
 /**************  END SKILLS     ********/ 
 
@@ -123,11 +130,18 @@ $(document).ready(function() {
                // ('#education').visible = false; 
             } else {
                 for (var i = 0; i < lengthOfAccomplishmentsArray; i++) {
-
-                    var currentAccomplishment = '#accomplishment' + (i + 1);
-                    $(currentAccomplishment + ' .title').html(resume.accomplishments[i].title); 
-                    $(currentAccomplishment + ' .month_year').html(resume.accomplishments[i].month_year); 
-                    $(currentAccomplishment + ' .description').html(resume.accomplishments[i].description); 
+                    var title = resume.accomplishments[i].title; 
+                    var month_year = resume.accomplishments[i].month_year; 
+                    var description = resume.accomplishments[i].description; 
+                    
+                
+                    var accomplishmentDiv = generateHTML ({
+                                            'title' : title,
+                                            'month_year' : month_year,
+                                            'description' : description
+                                        }, 'div');
+                    console.log(accomplishmentDiv);
+                    $('.accomplishment').append(accomplishmentDiv);
                 }  
             }  
 
