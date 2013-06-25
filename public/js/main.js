@@ -176,17 +176,23 @@ $(document).ready(function() {
     });
 ///*********BEGIN CREATE FORM FIELDS********/
 
-  $('.skill_block_add').click(function() {
-        var html = $('.skill_block').first().clone();
-        html.css('display', 'none');
-        html.find('input').val('');
-        $(this).before(html);
-        html.slideDown(600);
+    $('.skill_block_add').click(function() {
+       addABlock('.skill_block');
         return false;
     });
 
     $('.experience_block_add').click(function() {
         addABlock('.experience_block');
+        return false;
+    });
+
+    $('.education_block_add').click(function() {
+        addABlock('.education_block');
+        return false;
+    });
+
+        $('.accomplishments_block_add').click(function() {
+        addABlock('.accomplishments_block');
         return false;
     });
 
