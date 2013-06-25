@@ -9,11 +9,38 @@ function generateHTML(data, type) {
             html += '<li class="'+i+'">'+data[i]+'</li>';
         }
     }
-   // console.log(html);
     return html;
 }
 
+function formatMonthYear(date) {
+    var month = '';
+    var year = '';
+    var formattedMonthYear = '';
+    formattedMonthYear = String(parseInt(date));
+    if (formattedMonthYear.length < 4) {
+        formattedMonthYear = '0' + formattedMonthYear;
+    }
+    month = formattedMonthYear.substring(0, 2);
+    year = formattedMonthYear.substring(2, 4);
+    formattedMonthYear = month + '/' + year;
+    return formattedMonthYear;
+}  
+
+
+/*
+Notes: 
+Create  POST    /api/resumes
+Read    GET     /api/resumes/51c208396b1642a626000001
+Update  PUT     /api/resumes/51c208396b1642a626000001
+Delete  DELETE  /api/resumes/51c208396b1642a626000001
+
+Read all of the resumes (objects) 
+        GET     /api/resumes
+
+*/
+
 $(document).ready(function() {
+   // $.ajax('api/resumes/'+window.location.hash.substr(1), {
     $.ajax('api/resumes/51c208396b1642a626000001', {
         complete : function(response){
         var resume = response.responseJSON;
@@ -29,7 +56,7 @@ $(document).ready(function() {
         $('#city').html(resume.contact_info.street_address.city);
         $('#zip_code').html(resume.contact_info.street_address.zip_code);
     
-/**************  BEGIN SKILLS     ********/       
+    /**************  BEGIN SKILLS     ********/       
         lengthOfSkillArray = resume.skill.length;
         for (var i = 0; i < lengthOfSkillArray; i++) {
             var category = resume.skill[i].category; 
@@ -41,7 +68,6 @@ $(document).ready(function() {
                                             'skill_title' : skill_title,
                                             'skill_experience' : skill_experience
                                         }, 'div');
-                    console.log(skillsDiv);
                     $('.skill').append(skillsDiv); 
         }  
 /**************  END SKILLS     ********/ 
@@ -61,6 +87,9 @@ $(document).ready(function() {
                 var organization = resume.experience[i].organization; 
                 var location = resume.experience[i].location; 
             
+                start_month_year = formatMonthYear(start_month_year);
+                end_month_year = formatMonthYear(end_month_year);
+
                 lengthOfResponsibilitiesArray = resume.experience[i].responsibilities.length;
                 var responsibilitiesObject = {};
                 for (var h = 0; h < lengthOfResponsibilitiesArray; h++) {
@@ -80,14 +109,10 @@ $(document).ready(function() {
                  
                var responsibilitiesList = generateHTML (responsibilitiesObject, 'li');
                var entireExperience = experienceDiv +
-                    '<div class="responsibilities, clearfix"><h5>Responsibilities</h5><ul>' + 
-                    responsibilitiesList + '</ul></div>';
-                
+                        '<div class="responsibilities"><h5>Responsibilities</h5><ul>' + 
+                        responsibilitiesList + 
+                        '</ul></div>';
                 $('.experience').append(entireExperience);
-
-//Explore: can I do it this way using the commented out html and id's?   
-                // $('.experienceList').append(experienceDiv);
-               // $('.responsibilitiesList').append(responsibilitiesList);
             }
         }
 /************  END EXPERIENCE  *******/ 
@@ -106,7 +131,10 @@ $(document).ready(function() {
                     var minor = resume.schools[i].minor; 
                     var school_name = resume.schools[i].name; 
                     var gpa = resume.schools[i].gpa;
-                
+                    
+                    start_month_year = formatMonthYear(start_month_year);
+                    end_month_year = formatMonthYear(end_month_year);
+
                     var educationDiv = generateHTML ({
                                             'degree' : degree,
                                             'major' : major,
@@ -118,11 +146,10 @@ $(document).ready(function() {
                                             'gpa_label' : 'GPA',
                                             'gpa' : gpa
                                         }, 'div');
-                    console.log(educationDiv);
                     $('.education').append(educationDiv);
-
                 }  
-            }  
+            } 
+
 /************  END SCHOOLS   ******/
             lengthOfAccomplishmentsArray = resume.accomplishments.length;
             if (lengthOfAccomplishmentsArray < 1) {
@@ -134,43 +161,77 @@ $(document).ready(function() {
                     var month_year = resume.accomplishments[i].month_year; 
                     var description = resume.accomplishments[i].description; 
                     
-                
+                    month_year = formatMonthYear(month_year);
                     var accomplishmentDiv = generateHTML ({
                                             'title' : title,
                                             'month_year' : month_year,
                                             'description' : description
                                         }, 'div');
-                    console.log(accomplishmentDiv);
                     $('.accomplishment').append(accomplishmentDiv);
                 }  
             }  
-
-            
-            
            console.log(resume);
         }
+
+    });
+///*********BEGIN CREATE FORM FIELDS********/
+
+  $('.skill_block_add').click(function() {
+        var html = $('.skill_block').first().clone();
+        html.css('display', 'none');
+        html.find('input').val('');
+        $(this).before(html);
+        html.slideDown(600);
+        return false;
     });
 
-
-//BEGIN MY FUN CODE
-    $('body').keyup(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            largeValues();
-        } 
+    $('.experience_block_add').click(function() {
+        addABlock('.experience_block');
+        return false;
     });
+
+    function addABlock(className) {
+        var html = $(className).first().clone();
+        html.css('display', 'none');
+        html.find('input').val('');
+        $(className).after(html);
+        html.slideDown(600);
+    }
+/*
+  $('#userDataForm').submit(function() {
+        var userData = {};
+        userData.name_first = $('#input_name_first').val(); 
+        userData.name_last = $('#input_name_last').val(); 
+        userData.name_phone = $('#input_phone').val(); 
+        userData.name_email = $('#input_email').val(); 
+        userData.name_website = $('#input_website').val(); 
+        userData.skill = [];  
+        var skill_block = $('.skill_block');
+        console.log(userData);
+
+    
+
+ //       for (var i = 0; i < skill_block.length; i++) {
+ //           var skills = {};
+ //           skills.category = skill_block[i].find('input.input_category').val();
+ //           skills.title = skill_block[i].find('input.input_skill_title').val();
+ //           skills.experience = skill_block.find('input.input_skill_experience').val();
+ //           userData.skill.push(skills);
+ //       }
+
+            // OR USE THIS JQUERY FUNCTION
+
+            skill_block.each(function(index, item) {
+                userData.skill.push({
+                    category : item.find('input.input_category').val();
+                    title : item.find('input.input_skill_title').val();
+                    experience : item.find('input.input_skill_experience').val();
+                });
+            });
+
+          return false; 
+        }
+                                   
+  });
+*/
 });
-
-
-function largeValues() {
-    var first_name = 'Manu';
-    var last_name = 'Gin&oacute;bili';
-
-    var element;
-    element = $('#first_name');
-    element.html(first_name);
-    element = $('#last_name');
-    element.html(last_name);
-}
-
-
