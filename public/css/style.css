@@ -303,24 +303,24 @@ li a:hover {
 
 
 /* begin accomplishment specific */
-.accomplishment {
+.accomplishments {
     width: 100%;
     padding-bottom: 75px;   
 }
 
-.accomplishment .title {
+.accomplishments .title {
     width: 90%;
     float:left; 
     font-weight: bold;
 }
 
-.month_year {
+.accomplishments .month_year {
     width: 10%;
     text-align: right;
     float:left;
 }
 
-.accomplishment.description {
+.accomplishments.description {
     width: 100%;
     float:left;
 }

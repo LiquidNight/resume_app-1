@@ -26,6 +26,12 @@ function formatMonthYear(date) {
     return formattedMonthYear;
 }  
 
+function formattedMonthYear(date) {
+    var month = date.slice(5,7);
+    var year = date.slice(2, 4);
+    return (month + '/' + year);
+}
+
 
 /*
 Notes: 
@@ -167,12 +173,12 @@ $(document).ready(function() {
                     var description = resume.accomplishments[i].description; 
                     
                     month_year = formatMonthYear(month_year);
-                    var accomplishmentDiv = generateHTML ({
+                    var accomplishmentsDiv = generateHTML ({
                                             'title' : title,
                                             'month_year' : month_year,
                                             'description' : description
                                         }, 'div');
-                    $('.accomplishment').append(accomplishmentDiv);
+                    $('.accomplishments').append(accomplishmentsDiv);
                 }  
             }  
            console.log(resume);
@@ -215,14 +221,6 @@ $(document).ready(function() {
         userData.name_last = $('#input_name_last').val();
         userData.website = $('#input_website').val();
 
-     /*   userData.street_address = [];
-        userData.street_address.push({
-            city : $('#input_city').val(),
-            state : $('#input_state').val(),
-            street : $('#input_street').val(),
-            zip_code : $('#input_zip_code').val()
-        });
-  */
         street_address = [];
         street_address.push({
             city : $('#input_city').val(),
@@ -230,11 +228,8 @@ $(document).ready(function() {
             street : $('#input_street').val(),
             zip_code : $('#input_zip_code').val()
         });
-  
-
 
         userData.contact_info = [];
-       
         userData.contact_info.push({
             phone : $('#input_phone').val(), 
             email : $('#input_email').val(),
@@ -291,13 +286,15 @@ $(document).ready(function() {
             });
         });
 
-        userData.accomplishment = [];  
-        var accomplishment_block = $('.accomplishments_block');
-        accomplishment_block.each(function(index, item) {
-            userData.accomplishment.push({
-                title : $(item).find('input.input_accomplishment_title').val(),
-                month_year : $(item).find('input.input_accomplishment_month_year').val(),
-                description : $(item).find('input.input_accomplishment_description').val()
+        userData.accomplishments = [];  
+        var accomplishments_block = $('.accomplishments_block');
+        accomplishments_block.each(function(index, item) {
+            var accomplishmentMonthYear = $(item).find('input.input_accomplishments_month_year').val();
+            
+            userData.accomplishments.push({
+                title : $(item).find('input.input_accomplishments_title').val(),
+                month_year : formattedMonthYear(accomplishmentMonthYear),
+                description : $(item).find('input.input_accomplishments_description').val()
             });
         });
 
