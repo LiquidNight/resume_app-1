@@ -203,41 +203,64 @@ $(document).ready(function() {
         $(className).after(html);
         html.slideDown(600);
     }
-/*
-  $('#userDataForm').submit(function() {
+
+    $('#userDataForm').submit(function() {
         var userData = {};
         userData.name_first = $('#input_name_first').val(); 
         userData.name_last = $('#input_name_last').val(); 
         userData.name_phone = $('#input_phone').val(); 
         userData.name_email = $('#input_email').val(); 
         userData.name_website = $('#input_website').val(); 
+
         userData.skill = [];  
         var skill_block = $('.skill_block');
-        console.log(userData);
-
-    
-
- //       for (var i = 0; i < skill_block.length; i++) {
- //           var skills = {};
- //           skills.category = skill_block[i].find('input.input_category').val();
- //           skills.title = skill_block[i].find('input.input_skill_title').val();
- //           skills.experience = skill_block.find('input.input_skill_experience').val();
- //           userData.skill.push(skills);
- //       }
-
-            // OR USE THIS JQUERY FUNCTION
-
-            skill_block.each(function(index, item) {
-                userData.skill.push({
-                    category : item.find('input.input_category').val();
-                    title : item.find('input.input_skill_title').val();
-                    experience : item.find('input.input_skill_experience').val();
-                });
+        skill_block.each(function(index, item) {
+            userData.skill.push({
+                category : $(item).find('input.input_category').val(),
+                title : $(item).find('input.input_skill_title').val(),
+                experience : $(item).find('input.input_skill_experience').val()
             });
+        });
 
-          return false; 
-        }
-                                   
-  });
-*/
+        userData.experience = [];  
+        var experience_block = $('.experience_block');
+        experience_block.each(function(index, item) {
+            userData.experience.push({
+                role : $(item).find('input.input_role').val(),
+                project : $(item).find('input.input_project').val(),
+                start_month_year : $(item).find('input.input_start_month_year').val(),
+                end_month_year : $(item).find('input.input_end_month_year').val(),
+                organization : $(item).find('input.input_organization').val(),
+                location : $(item).find('input.input_location').val()
+            });
+        });
+
+        userData.education = [];  
+        var education_block = $('.education_block');
+        education_block.each(function(index, item) {
+                userData.education.push({
+                school_name : $(item).find('input.input_school_name').val(),
+                degree : $(item).find('input.input_degree').val(),
+                major : $(item).find('input.input_major').val(),
+                start_month_year : $(item).find('input.input_start_month_year').val(),
+                end_month_year : $(item).find('input.input_end_month_year').val(),
+                minor : $(item).find('input.input_minor').val(),
+                gpa : $(item).find('input.input_gpa').val()
+            });
+        });
+
+        userData.accomplishment = [];  
+        var accomplishment_block = $('.accomplishments_block');
+        accomplishment_block.each(function(index, item) {
+            userData.accomplishment.push({
+                title : $(item).find('input.input_accomplishment_title').val(),
+                month_year : $(item).find('input.input_accomplishment_month_year').val(),
+                description : $(item).find('input.input_accomplishment_description').val()
+            });
+        });
+
+        console.log(userData.accomplishment);
+        return false;                                
+    });
+
 });
