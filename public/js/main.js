@@ -215,8 +215,16 @@ $(document).ready(function() {
         userData.name_last = $('#input_name_last').val();
         userData.website = $('#input_website').val();
 
-        userData.street_address = [];
+     /*   userData.street_address = [];
         userData.street_address.push({
+            city : $('#input_city').val(),
+            state : $('#input_state').val(),
+            street : $('#input_street').val(),
+            zip_code : $('#input_zip_code').val()
+        });
+  */
+        street_address = [];
+        street_address.push({
             city : $('#input_city').val(),
             state : $('#input_state').val(),
             street : $('#input_street').val(),
@@ -224,12 +232,13 @@ $(document).ready(function() {
         });
   
 
+
         userData.contact_info = [];
        
         userData.contact_info.push({
             phone : $('#input_phone').val(), 
             email : $('#input_email').val(),
-            street_address: userData.street_address
+            street_address: street_address
         });
 
         userData.skill = [];  
