@@ -197,6 +197,14 @@ $(document).ready(function() {
         return false;
     });
 
+/******* Fix:   - add responsibility to a new experience block
+                - currently more than one responsibility is visible for new experience block
+********/                
+     $('.responsibility_block_add').click(function() {
+        addABlock('.responsibility_block');
+        return false;
+    });
+
     $('.schools_block_add').click(function() {
         addABlock('.schools_block');
         return false;
@@ -222,13 +230,11 @@ $(document).ready(function() {
         userData.website = $('#input_website').val();
         userData.linked_in = $('#input_linked_in').val();
 
-        street_address = [];
-        street_address.push({
-            city : $('#input_city').val(),
-            state : $('#input_state').val(),
-            street : $('#input_street').val(),
-            zip_code : $('#input_zip_code').val()
-        });
+        street_address = {};
+        street_address['city'] = $('#input_city').val();
+        street_address['state'] = $('#input_state').val();
+        street_address['street'] = $('#input_street').val();
+        street_address['zip_code'] = $('#input_zip_code').val();
 
         userData.contact_info = [];
         userData.contact_info.push({
@@ -254,13 +260,20 @@ $(document).ready(function() {
         experience_block.each(function(index, item) {
             var expStartMonthYear = $(item).find('input.input_experience_start_month_year').val();
             var expEndMonthYear = $(item).find('input.input_experience_end_month_year').val();
+
+         /*   responsibilities = [];
+            for (var r = 0; r < 2; r++) {
+                responsibilities[r] = 
+            }
+*/
             userData.experience.push({
                 role : $(item).find('input.input_role').val(),
                 project : $(item).find('input.input_project').val(),
                 start_month_year : formattedMonthYear(expStartMonthYear),
                 end_month_year : (formattedMonthYear(expEndMonthYear) + '}'),
                 organization : $(item).find('input.input_organization').val(),
-                location : $(item).find('input.input_location').val()
+                location : $(item).find('input.input_location').val(),
+                responsibility : $(item).find('input.input_responsibility').val()
             });
         });
 
