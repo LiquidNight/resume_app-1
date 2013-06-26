@@ -229,6 +229,7 @@ $(document).ready(function() {
         userData.name_last = $('#input_name_last').val();
         userData.website = $('#input_website').val();
         userData.linked_in = $('#input_linked_in').val();
+        userData.twitter = $('#input_twitter').val();
 
         street_address = {};
         street_address['city'] = $('#input_city').val();
