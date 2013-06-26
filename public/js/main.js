@@ -220,6 +220,7 @@ $(document).ready(function() {
         userData.name_first = $('#input_name_first').val(); 
         userData.name_last = $('#input_name_last').val();
         userData.website = $('#input_website').val();
+        userData.linked_in = $('#input_linked_in').val();
 
         street_address = [];
         street_address.push({
@@ -242,7 +243,7 @@ $(document).ready(function() {
             userData.skill.push({
                 category : $(item).find('input.input_category').val(),
                 title : $(item).find('input.input_skill_title').val(),
-                skill_experience : $(item).find('input.input_skill_experience').val()
+                experience : $(item).find('select.input_skill_experience').val()
             });
         });
 
