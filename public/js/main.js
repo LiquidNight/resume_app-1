@@ -29,7 +29,7 @@ function formatMonthYear(date) {
 function formattedMonthYear(date) {
     var month = date.slice(5,7);
     var year = date.slice(2, 4);
-    return (month + '/' + year);
+    return (month + year);
 }
 
 
@@ -266,23 +266,14 @@ $(document).ready(function() {
         userData.schools = [];  
         var schools_block = $('.schools_block');
         schools_block.each(function(index, item) {
-           
-                var startDate =  $(item).find('input.input_schools_start_month_year').val();
-                var startMonth = startDate.slice(5,7);
-                var startYear = startDate.slice(2, 4);
-                var formattedStartDate = startMonth + startYear;
-
-                var endDate =  $(item).find('input.input_schools_end_month_year').val();
-                var endMonth = endDate.slice(5,7);
-                var endYear = endDate.slice(2, 4);
-                var formattedEndDate = endMonth + endYear + "}";
-            
+                var schoolsStartMonthYear =  $(item).find('input.input_schools_start_month_year').val();
+                var schoolsEndMonthYear =  $(item).find('input.input_schools_end_month_year').val();
                 userData.schools.push({
                 name : $(item).find('input.input_school_name').val(),
                 degree : $(item).find('input.input_degree').val(),
                 major : $(item).find('input.input_major').val(),
-                start_month_year : formattedStartDate,
-                end_month_year : formattedEndDate,
+                start_month_year : formattedMonthYear(schoolsStartMonthYear),
+                end_month_year : (formattedMonthYear(schoolsEndMonthYear) + '}'),
                 minor : $(item).find('input.input_minor').val(),
                 gpa : $(item).find('input.input_gpa').val()
             });
