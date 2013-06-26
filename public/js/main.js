@@ -289,12 +289,11 @@ $(document).ready(function() {
         userData.accomplishments = [];  
         var accomplishments_block = $('.accomplishments_block');
         accomplishments_block.each(function(index, item) {
-            var accomplishmentMonthYear = $(item).find('input.input_accomplishments_month_year').val();
-            
+            var accomplishmentMonthYear = $(item).find('input.input_accomplishments_month_year').val(); 
             userData.accomplishments.push({
                 title : $(item).find('input.input_accomplishments_title').val(),
                 month_year : formattedMonthYear(accomplishmentMonthYear),
-                description : $(item).find('input.input_accomplishments_description').val()
+                description : $(item).find('textarea.input_accomplishments_description').val()
             });
         });
 
