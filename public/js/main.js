@@ -126,7 +126,7 @@ $(document).ready(function() {
             lengthOfSchoolsArray = resume.schools.length;
             if (lengthOfSchoolsArray < 1) {
                 //Figure out real code to make this false.
-               // ('#education').visible = false; 
+               // ('#schools').visible = false; 
             } else {
                 for (var i = 0; i < lengthOfSchoolsArray; i++) {
                     var degree = resume.schools[i].degree; 
@@ -140,7 +140,7 @@ $(document).ready(function() {
                     start_month_year = formatMonthYear(start_month_year);
                     end_month_year = formatMonthYear(end_month_year);
 
-                    var educationDiv = generateHTML ({
+                    var schoolsDiv = generateHTML ({
                                             'degree' : degree,
                                             'major' : major,
                                             'start_month_year' : start_month_year,
@@ -151,7 +151,7 @@ $(document).ready(function() {
                                             'gpa_label' : 'GPA',
                                             'gpa' : gpa
                                         }, 'div');
-                    $('.education').append(educationDiv);
+                    $('.schools').append(schoolsDiv);
                 }  
             } 
 
@@ -159,7 +159,7 @@ $(document).ready(function() {
             lengthOfAccomplishmentsArray = resume.accomplishments.length;
             if (lengthOfAccomplishmentsArray < 1) {
                 //Figure out real code to make this false.
-               // ('#education').visible = false; 
+               // ('#schools').visible = false; 
             } else {
                 for (var i = 0; i < lengthOfAccomplishmentsArray; i++) {
                     var title = resume.accomplishments[i].title; 
@@ -191,8 +191,8 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.education_block_add').click(function() {
-        addABlock('.education_block');
+    $('.schools_block_add').click(function() {
+        addABlock('.schools_block');
         return false;
     });
 
@@ -212,14 +212,25 @@ $(document).ready(function() {
     $('#userDataForm').submit(function() {
         var userData = {};
         userData.name_first = $('#input_name_first').val(); 
-        userData.name_last = $('#input_name_last').val(); 
-        userData.name_phone = $('#input_phone').val(); 
-        userData.name_email = $('#input_email').val(); 
-        userData.name_website = $('#input_website').val(); 
-        userData.street = $('#input_street').val();
-        userData.city = $('#input_city').val();
-        userData.state = $('#input_state').val();
-        userData.zip_code = $('#input_zip_code').val();
+        userData.name_last = $('#input_name_last').val();
+        userData.website = $('#input_website').val();
+
+        userData.street_address = [];
+        userData.street_address.push({
+            city : $('#input_city').val(),
+            state : $('#input_state').val(),
+            street : $('#input_street').val(),
+            zip_code : $('#input_zip_code').val()
+        });
+  
+
+        userData.contact_info = [];
+       
+        userData.contact_info.push({
+            phone : $('#input_phone').val(), 
+            email : $('#input_email').val(),
+            street_address: userData.street_address
+        });
 
         userData.skill = [];  
         var skill_block = $('.skill_block');
@@ -239,22 +250,33 @@ $(document).ready(function() {
             userData.experience.push({
                 role : $(item).find('input.input_role').val(),
                 project : $(item).find('input.input_project').val(),
-                start_month_year : $(item).find('input.input_start_month_year').val(),
-                end_month_year : $(item).find('input.input_end_month_year').val(),
+                start_month_year : $(item).find('input.input_experience_start_month_year').val(),
+                end_month_year : $(item).find('input.input_experience_end_month_year').val(),
                 organization : $(item).find('input.input_organization').val(),
                 location : $(item).find('input.input_location').val()
             });
         });
 
-        userData.education = [];  
-        var education_block = $('.education_block');
-        education_block.each(function(index, item) {
-                userData.education.push({
-                school_name : $(item).find('input.input_school_name').val(),
+        userData.schools = [];  
+        var schools_block = $('.schools_block');
+        schools_block.each(function(index, item) {
+           
+                var startDate =  $(item).find('input.input_schools_start_month_year').val();
+                var startMonth = startDate.slice(5,7);
+                var startYear = startDate.slice(2, 4);
+                var formattedStartDate = startMonth + startYear;
+
+                var endDate =  $(item).find('input.input_schools_end_month_year').val();
+                var endMonth = endDate.slice(5,7);
+                var endYear = endDate.slice(2, 4);
+                var formattedEndDate = endMonth + endYear + "}";
+            
+                userData.schools.push({
+                name : $(item).find('input.input_school_name').val(),
                 degree : $(item).find('input.input_degree').val(),
                 major : $(item).find('input.input_major').val(),
-                start_month_year : $(item).find('input.input_start_month_year').val(),
-                end_month_year : $(item).find('input.input_end_month_year').val(),
+                start_month_year : formattedStartDate,
+                end_month_year : formattedEndDate,
                 minor : $(item).find('input.input_minor').val(),
                 gpa : $(item).find('input.input_gpa').val()
             });

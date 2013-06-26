@@ -260,8 +260,8 @@ li a:hover {
 
 /* end work experience specific */
 
-/* begin education specific */
-.education {
+/* begin schools specific */
+.schools {
     width: 100%;
     padding-bottom: 75px;   
 }
@@ -299,7 +299,7 @@ li a:hover {
     float: left;
 }
 
-/* end education specific */
+/* end schools specific */
 
 
 /* begin accomplishment specific */
