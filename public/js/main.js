@@ -251,11 +251,19 @@ $(document).ready(function() {
         userData.experience = [];  
         var experience_block = $('.experience_block');
         experience_block.each(function(index, item) {
+            var expStartMonthYear = $(item).find('input.input_experience_start_month_year').val();
+                var expEndMonthYear = $(item).find('input.input_experience_end_month_year').val();
+
+                expStartMonthYear = formattedMonthYear(expStartMonthYear);
+                expEndMonthYear = formattedMonthYear(expEndMonthYear) + '}';
+              //  console.log(expEndMonthYear);
             userData.experience.push({
                 role : $(item).find('input.input_role').val(),
                 project : $(item).find('input.input_project').val(),
-                start_month_year : $(item).find('input.input_experience_start_month_year').val(),
-                end_month_year : $(item).find('input.input_experience_end_month_year').val(),
+          //      start_month_year : $(item).find('input.input_experience_start_month_year').val(),
+          //      end_month_year : $(item).find('input.input_experience_end_month_year').val(),
+                start_month_year : expStartMonthYear,
+                end_month_year : expEndMonthYear,
                 organization : $(item).find('input.input_organization').val(),
                 location : $(item).find('input.input_location').val()
             });
