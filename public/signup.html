@@ -109,13 +109,13 @@
                 <div class="control-group">
                     <label class="control-label" for="input_address">Address</label>
                     <div class="controls">
-                        <input id="street" class="address" type="text" placeholder="1234 Street St." />
+                        <input id="input_street" class="address" type="text" placeholder="1234 Street St." />
                     </div>
                 </div>
 
                 <div class="control-group">
                    <div class="controls">
-                        <input id="city" class="address" type="text" placeholder="Anycity" />
+                        <input id="input_city" class="address" type="text" placeholder="Anycity" />
                         <select id="input_state" class="address span1">
                           <option>CA</option>
                           <option>NM</option>
@@ -123,7 +123,7 @@
                           <option>HI</option>
                           <option>AZ</option>
                         </select>
-                        <input id="zip_code" class="address" type="text" placeholder="#####" />
+                        <input id="input_zip_code" class="address" type="text" placeholder="#####" />
                     </div>
                 </div>
             </fieldset>
@@ -146,7 +146,7 @@
                         <label class="control-label" for="input_skill_experience">Years of Experience</label>
                         <div class="controls">
                            <select class="input_skill_experience span1">
-                              <option></option>
+                              <option>0</option>
                               <option>&lt;1</option>
                               <option>1</option>
                               <option>2</option>
@@ -226,13 +226,13 @@
                     <div class="control-group">
                         <label class="control-label" for="input_education">Start Date</label>
                         <div class="controls">
-                            <input type="date" class="input_education_start_month_year input_education" name="input__education_start_month_year">
+                            <input type="month" class="input_education_start_month_year input_education" name="input__education_start_month_year">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="input_education">End Date</label>
                         <div class="controls">
-                            <input type="date" class="input_education_end_month_year input_education" name="input_education_start_month_year">
+                            <input type="month" class="input_education_end_month_year input_education" name="input_education_start_month_year">
                         </div>
                     </div>
                 </div>
@@ -251,7 +251,7 @@
                     <div class="control-group">
                         <label class="control-label" for="input_accomplishments">Date</label>
                         <div class="controls">
-                            <input type="date" class="input_accomplishment_date" name="input_accomplishment_date">
+                            <input type="month" class="input_accomplishment_date" name="input_accomplishment_date">
                         </div>
                     </div>
                     <div class="control-group">
@@ -263,12 +263,11 @@
                 </div>
                 <span class="help-block"><a href="#" class="accomplishments_block_add">+ Add Accomplishment</a></span>
             </fieldset>
-
-             <button type="submit" class="btn">Submit</button>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn">Cancel</button>
+            </div>
         </form>
 	</body>
 </html>
 
- <script>
-   var name = $('input[type="text"]').val();
-</script>

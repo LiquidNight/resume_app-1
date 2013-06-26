@@ -39,11 +39,16 @@ Read all of the resumes (objects)
 
 */
 
+ 
+  
+
+
 $(document).ready(function() {
    // $.ajax('api/resumes/'+window.location.hash.substr(1), {
     $.ajax('api/resumes/51c208396b1642a626000001', {
         complete : function(response){
         var resume = response.responseJSON;
+
         $('#name_first').html(resume.name_first);
         $('#name_last').html(resume.name_last);
         
@@ -211,6 +216,10 @@ $(document).ready(function() {
         userData.name_phone = $('#input_phone').val(); 
         userData.name_email = $('#input_email').val(); 
         userData.name_website = $('#input_website').val(); 
+        userData.street = $('#input_street').val();
+        userData.city = $('#input_city').val();
+        userData.state = $('#input_state').val();
+        userData.zip_code = $('#input_zip_code').val();
 
         userData.skill = [];  
         var skill_block = $('.skill_block');
@@ -218,9 +227,11 @@ $(document).ready(function() {
             userData.skill.push({
                 category : $(item).find('input.input_category').val(),
                 title : $(item).find('input.input_skill_title').val(),
-                experience : $(item).find('input.input_skill_experience').val()
+                skill_experience : $(item).find('input.input_skill_experience').val()
             });
         });
+
+        console.log(userData);
 
         userData.experience = [];  
         var experience_block = $('.experience_block');
@@ -259,7 +270,6 @@ $(document).ready(function() {
             });
         });
 
-        console.log(userData.accomplishment);
         return false;                                
     });
 
