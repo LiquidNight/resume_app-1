@@ -32,6 +32,30 @@ function formattedMonthYear(date) {
     return (month + year);
 }
 
+function addANewExperience() {
+        var html = $('.experience_block').first().clone();
+        var link = html.find('.responsibility_block_add');
+        link.click(addANewResponsibility);
+        html.find('.responsibility_block').slice(1).remove();
+        html.css('display', 'none');
+        html.find('input').val('');
+        $(this).before(html);
+        html.slideDown(600);
+        return false;
+}        
+
+                
+    function addANewResponsibility () {
+        var html = $('.responsibility_block').first().clone();
+        html.css('display', 'none');
+        html.find('input').val('');
+        
+        $(this).before(html);
+        html.slideDown(600);
+        //call function here again?
+        return false;
+}
+
 
 /*
 Notes: 
@@ -192,30 +216,12 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.experience_block_add').click(function() {
-       // addABlock('.experience_block', '.experience_block_add');
-        var html = $('.experience_block').first().clone();
-        html.find('.responsibility_block').slice(1).remove();
-        html.css('display', 'none');
-        html.find('input').val('');
-        $(this).before(html);
-        html.slideDown(600);
+    $('.experience_block_add').click(addANewExperience);
     
-        return false;
-    });
-                
-     $('.responsibility_block_add').click(function() {
-       // addABlock('.responsibility_block', '.responsibility_block_add');
-        var html = $('.responsibility_block').first().clone();
-        html.css('display', 'none');
-        html.find('input').val('');
-        console.log(html);
-        $(this).before(html);
-        html.slideDown(600);
     
-     //html.css('display', 'block');
-        return false;
-    });
+         
+    $('.responsibility_block_add').click(addANewResponsibility);
+    
 
 
     $('.schools_block_add').click(function() {
