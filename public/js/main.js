@@ -193,12 +193,13 @@ $(document).ready(function() {
     });
 
     $('.experience_block_add').click(function() {
-      //  addABlock('.experience_block', '.experience_block_add');
-        var html = $('.myBlock').first().clone();
+        addABlock('.experience_block', '.experience_block_add');
+       /* var html = $('.myBlock').first().clone();
         html.css('display', 'none');
         html.find('input').val('');
         $(this).before(html);
         html.slideDown(600);
+    */
         return false;
     });
                 
@@ -207,19 +208,10 @@ $(document).ready(function() {
         var html = $('.responsibility_block').first().clone();
         html.css('display', 'none');
         html.find('input').val('');
+        console.log(html);
         $(this).before(html);
         html.slideDown(600);
-     //html.css('display', 'block');
-        return false;
-    });
-
-     $('.myBlock.responsibility_block_add').click(function() {
-       // addABlock('.responsibility_block', '.responsibility_block_add');
-        var html = $('.responsibility_block').first().clone();
-        html.css('display', 'none');
-        html.find('input').val('');
-        $(this).before(html);
-        html.slideDown(600);
+    
      //html.css('display', 'block');
         return false;
     });
@@ -278,24 +270,23 @@ $(document).ready(function() {
 
         userData.experience = [];  
         var experience_block = $('.experience_block');
-        experience_block.each(function(index, item) {
-            var expStartMonthYear = $(item).find('input.input_experience_start_month_year').val();
-            var expEndMonthYear = $(item).find('input.input_experience_end_month_year').val();
+        experience_block.each(function(expIndex, expItem) {
+            var expStartMonthYear = $(expItem).find('input.input_experience_start_month_year').val();
+            var expEndMonthYear = $(expItem).find('input.input_experience_end_month_year').val();
 
             responsibilities = [];
-            var responsibility_block = $('.responsibility_block');
-            responsibility_block.each(function(index, item) {
-                responsibilities[index] = $(item).find('input.input_responsibility').val();
+            var responsibility_block = $(expItem).find('.responsibility_block');
+                responsibility_block.each(function(rIndex, rItem) {
+                responsibilities[rIndex] = $(rItem).find('input.input_responsibility').val();
             });
            
             userData.experience.push({
-                role : $(item).find('input.input_role').val(),
-                project : $(item).find('input.input_project').val(),
+                role : $(expItem).find('input.input_role').val(),
+                project : $(expItem).find('input.input_project').val(),
                 start_month_year : formattedMonthYear(expStartMonthYear),
                 end_month_year : (formattedMonthYear(expEndMonthYear) + '}'),
-                organization : $(item).find('input.input_organization').val(),
-                location : $(item).find('input.input_location').val(),
-                //responsibility : $(item).find('input.input_responsibility').val()
+                organization : $(expItem).find('input.input_organization').val(),
+                location : $(expItem).find('input.input_location').val(),
                 responsibility : responsibilities
             });
         });
