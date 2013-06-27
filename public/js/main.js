@@ -193,13 +193,14 @@ $(document).ready(function() {
     });
 
     $('.experience_block_add').click(function() {
-        addABlock('.experience_block', '.experience_block_add');
-       /* var html = $('.myBlock').first().clone();
+       // addABlock('.experience_block', '.experience_block_add');
+        var html = $('.experience_block').first().clone();
+        html.find('.responsibility_block').slice(1).remove();
         html.css('display', 'none');
         html.find('input').val('');
         $(this).before(html);
         html.slideDown(600);
-    */
+    
         return false;
     });
                 
