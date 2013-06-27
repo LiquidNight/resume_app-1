@@ -265,8 +265,6 @@ $(document).ready(function() {
                 responsibilities[index] = $(item).find('input.input_responsibility').val();
             });
            
-            console.log(responsibilities);
-
             userData.experience.push({
                 role : $(item).find('input.input_role').val(),
                 project : $(item).find('input.input_project').val(),
