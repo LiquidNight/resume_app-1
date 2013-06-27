@@ -26,36 +26,41 @@ function formatMonthYear(date) {
     return formattedMonthYear;
 }  
 
-function formattedMonthYear(date) {
+function formatMonthYearData(date) {
     var month = date.slice(5,7);
     var year = date.slice(2, 4);
     return (month + year);
 }
 
 function addANewExperience() {
-        var html = $('.experience_block').first().clone();
-        var link = html.find('.responsibility_block_add');
-        link.click(addANewResponsibility);
-        html.find('.responsibility_block').slice(1).remove();
-        html.css('display', 'none');
-        html.find('input').val('');
-        $(this).before(html);
-        html.slideDown(600);
-        return false;
+    var html = $('.experience_block').first().clone();
+    var linkResponsibility = html.find('.responsibility_block_add');
+    linkResponsibility.click(addANewResponsibility);
+    html.find('.responsibility_block').slice(1).remove();
+    html.css('display', 'none');
+    html.find('input').val('');
+    $(this).before(html);
+    html.slideDown(600);
+    return false;
 }        
 
                 
-    function addANewResponsibility () {
-        var html = $('.responsibility_block').first().clone();
-        html.css('display', 'none');
-        html.find('input').val('');
-        
-        $(this).before(html);
-        html.slideDown(600);
-        //call function here again?
-        return false;
+function addANewResponsibility () {
+    var html = $('.responsibility_block').first().clone();
+    html.css('display', 'none');
+    html.find('input').val('');
+    $(this).before(html);
+    html.slideDown(600);
+    return false;
 }
 
+function addABlock(className, blockName) {
+    var html = $(className).first().clone();
+    html.css('display', 'none');
+    html.find('input').val('');
+    $(blockName).before(html);
+    html.slideDown(600);
+}
 
 /*
 Notes: 
@@ -75,6 +80,7 @@ Read all of the resumes (objects)
 
 $(document).ready(function() {
    // $.ajax('api/resumes/'+window.location.hash.substr(1), {
+   // $.ajax('api/resumes/51c208396b1642a626000001', {
     $.ajax('api/resumes/51c208396b1642a626000001', {
         complete : function(response){
         var resume = response.responseJSON;
@@ -91,7 +97,7 @@ $(document).ready(function() {
         $('#city').html(resume.contact_info.street_address.city);
         $('#zip_code').html(resume.contact_info.street_address.zip_code);
     
-    /**************  BEGIN SKILLS     ********/       
+/**************  BEGIN SKILLS     ********/       
         lengthOfSkillArray = resume.skill.length;
         for (var i = 0; i < lengthOfSkillArray; i++) {
             var category = resume.skill[i].category; 
@@ -209,39 +215,31 @@ $(document).ready(function() {
         }
 
     });
-///*********BEGIN CREATE FORM FIELDS********/
-
+///********* BEGIN CREATE FORM FIELDS ********/
     $('.skill_block_add').click(function() {
        addABlock('.skill_block', '.skill_block_add');
         return false;
     });
 
     $('.experience_block_add').click(addANewExperience);
-    
-    
-         
+        
     $('.responsibility_block_add').click(addANewResponsibility);
     
-
-
     $('.schools_block_add').click(function() {
         addABlock('.schools_block', '.schools_block_add');
         return false;
     });
 
-        $('.accomplishments_block_add').click(function() {
+    $('.accomplishments_block_add').click(function() {
         addABlock('.accomplishments_block', '.accomplishments_block_add');
         return false;
     });
 
-    function addABlock(className, blockName) {
-        var html = $(className).first().clone();
-        html.css('display', 'none');
-        html.find('input').val('');
-        $(blockName).before(html);
-        html.slideDown(600);
-    }
 
+///********* END CREATE FORM FIELDS ********/
+
+
+///********* BEGIN SUBMIT ********/
     $('#userDataForm').submit(function() {
         var userData = {};
         userData.name_first = $('#input_name_first').val(); 
@@ -256,13 +254,11 @@ $(document).ready(function() {
         street_address['street'] = $('#input_street').val();
         street_address['zip_code'] = $('#input_zip_code').val();
 
-        userData.contact_info = [];
-        userData.contact_info.push({
-            phone : $('#input_phone').val(), 
-            email : $('#input_email').val(),
-            street_address: street_address
-        });
-
+        userData.contact_info = {};
+        userData.contact_info['phone'] = $('#input_phone').val(); 
+        userData.contact_info['email'] = $('#input_email').val();
+        userData.contact_info['street_address'] = street_address;
+     
         userData.skill = [];  
         var skill_block = $('.skill_block');
         skill_block.each(function(index, item) {
@@ -272,8 +268,6 @@ $(document).ready(function() {
                 experience : $(item).find('select.input_skill_experience').val()
             });
         });
-
-        console.log(userData);
 
         userData.experience = [];  
         var experience_block = $('.experience_block');
@@ -290,11 +284,11 @@ $(document).ready(function() {
             userData.experience.push({
                 role : $(expItem).find('input.input_role').val(),
                 project : $(expItem).find('input.input_project').val(),
-                start_month_year : formattedMonthYear(expStartMonthYear),
-                end_month_year : (formattedMonthYear(expEndMonthYear) + '}'),
+                start_month_year : formatMonthYearData(expStartMonthYear),
+                end_month_year : (formatMonthYearData(expEndMonthYear) + '}'),
                 organization : $(expItem).find('input.input_organization').val(),
                 location : $(expItem).find('input.input_location').val(),
-                responsibility : responsibilities
+                responsibilities : responsibilities
             });
         });
 
@@ -307,8 +301,8 @@ $(document).ready(function() {
                 name : $(item).find('input.input_school_name').val(),
                 degree : $(item).find('input.input_degree').val(),
                 major : $(item).find('input.input_major').val(),
-                start_month_year : formattedMonthYear(schoolsStartMonthYear),
-                end_month_year : (formattedMonthYear(schoolsEndMonthYear) + '}'),
+                start_month_year : formatMonthYearData(schoolsStartMonthYear),
+                end_month_year : (formatMonthYearData(schoolsEndMonthYear) + '}'),
                 minor : $(item).find('input.input_minor').val(),
                 gpa : $(item).find('input.input_gpa').val()
             });
@@ -320,9 +314,23 @@ $(document).ready(function() {
             var accomplishmentMonthYear = $(item).find('input.input_accomplishments_month_year').val(); 
             userData.accomplishments.push({
                 title : $(item).find('input.input_accomplishments_title').val(),
-                month_year : formattedMonthYear(accomplishmentMonthYear),
+                month_year : formatMonthYearData(accomplishmentMonthYear),
                 description : $(item).find('textarea.input_accomplishments_description').val()
             });
+        });
+
+        console.log(userData);
+
+        //everytime you make a post
+        //  first key has to be JSON.stringify({'resume' : userData});
+        //  set up a getPath function so you don't have it all over the place.
+
+        var postData = JSON.stringify({'resume' : userData});
+        
+        $.ajax({
+            type : "POST",
+            url : "/api/resumes",
+            data: postData
         });
 
         return false;                                
