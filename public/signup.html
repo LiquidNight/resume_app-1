@@ -13,6 +13,10 @@
                 margin: auto;
                 width: 85%;
             } 
+
+             .myBlock {
+                display: none;
+            }
         </style>
 	</head>
 	<body>
@@ -219,6 +223,62 @@
                 </div>
                 <span class="help-block"><a href="#" class="experience_block_add">+ Add Experience</a></span>
             </fieldset>
+ <!-- begin invisible -->
+<div class="myBlock">
+
+            <fieldset>
+                <legend>Work Experience </legend>
+                <div class="experience_block">
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Role</label>
+                        <div class="controls">
+                            <input class="input_role input_experience" type="text" placeholder="Painter" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Project</label>
+                        <div class="controls">
+                            <input class="input_project input_experience" type="text" placeholder="Mona Lisa" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Organization</label>
+                        <div class="controls">
+                            <input class="input_organization input_experience" type="text" placeholder="Louvre" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Location</label>
+                        <div class="controls">
+                            <input class="input_location input_experience" type="text" placeholder="Somewhere" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Start Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_experience_start_month_year input_experience" name="input_experience_start_month_year">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">End Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_experience_end_month_year input_experience" name="input_experience_end_month_year">
+                        </div>
+                    </div>
+                    <div class="control-group responsibility_block">
+                        <label class="control-label" for="input_experience">Responsibility</label>
+                        <div class="controls">
+                            <input class="input_responsibility input_experience" type="text" placeholder="responsibility" />
+                        </div>
+                    </div>
+                    
+                    <span class="help-block"><a href="#" class="responsibility_block_add">+ Add Responsibility</a></span>
+                </div>
+          <!--      <span class="help-block"><a href="#" class="experience_block_add">+ Add Experience</a></span> -->
+            </fieldset>
+</div>
+
+           
 
             <fieldset>
                 <legend>Education</legend>

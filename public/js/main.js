@@ -193,14 +193,37 @@ $(document).ready(function() {
     });
 
     $('.experience_block_add').click(function() {
-        addABlock('.experience_block', '.experience_block_add');
+      //  addABlock('.experience_block', '.experience_block_add');
+        var html = $('.myBlock').first().clone();
+        html.css('display', 'none');
+        html.find('input').val('');
+        $(this).before(html);
+        html.slideDown(600);
         return false;
     });
                 
      $('.responsibility_block_add').click(function() {
-        addABlock('.responsibility_block', '.responsibility_block_add');
+       // addABlock('.responsibility_block', '.responsibility_block_add');
+        var html = $('.responsibility_block').first().clone();
+        html.css('display', 'none');
+        html.find('input').val('');
+        $(this).before(html);
+        html.slideDown(600);
+     //html.css('display', 'block');
         return false;
     });
+
+     $('.myBlock.responsibility_block_add').click(function() {
+       // addABlock('.responsibility_block', '.responsibility_block_add');
+        var html = $('.responsibility_block').first().clone();
+        html.css('display', 'none');
+        html.find('input').val('');
+        $(this).before(html);
+        html.slideDown(600);
+     //html.css('display', 'block');
+        return false;
+    });
+
 
     $('.schools_block_add').click(function() {
         addABlock('.schools_block', '.schools_block_add');
