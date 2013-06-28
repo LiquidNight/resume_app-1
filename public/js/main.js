@@ -12,6 +12,18 @@ function generateHTML(data, type) {
     return html;
 }
 
+function generateNameListByID(data) {
+    var html = '';
+    var dataID = data.id;
+    var deleteButton = '<button type="button" onclick="deleteRecord(\'' + dataID + '\')" class="btn ">Delete</button>'
+    var ViewButton = '<button type="button" onclick="viewRecord(\'' + dataID + '\')" class="btn ">View</button>'
+    
+    html += '<li id="'+ data.id+'">'+data.name_first+ ' ' + data.name_last + ' ' +
+                 deleteButton + ' ' + ViewButton + '</li>';
+    return html;
+
+  }
+
 function formatMonthYear(date) {
     var month = '';
     var year = '';
@@ -62,6 +74,40 @@ function addABlock(className, blockName) {
     html.slideDown(600);
 }
 
+function deleteRecord(dataID) {
+    var recordURL = "/api/resumes/" + dataID;
+    $.ajax({
+        type : "DELETE",
+        url : recordURL,
+        success: function(response){
+                        console.log("successfully deleted");
+                        return false;
+                    },
+        fail: function(response){
+                        console.log("fail: I am currently hardcoded.");
+                        return false;
+                    }
+    });
+}
+
+/*
+function viewRecord(dataID) {
+    var recordURL = "/api/resumes/" + dataID;
+    $.ajax({
+        type : "GET",
+        url : recordURL,
+        success: function(response){
+                        console.log("successfully got-ed");
+                        return false;
+                    },
+        fail: function(response){
+                        console.log("fail.");
+                        return false;
+                    }
+    });
+}
+*/
+
 /*
 Notes: 
 Create  POST    /api/resumes
@@ -79,8 +125,26 @@ Read all of the resumes (objects)
 
 
 $(document).ready(function() {
-   // $.ajax('api/resumes/'+window.location.hash.substr(1), {
-   // $.ajax('api/resumes/51c208396b1642a626000001', {
+   
+   $.ajax('api/resumes', {
+        complete : function(response){
+            var allResumes = response.responseJSON;
+            console.log(allResumes);
+            var length = allResumes.length;
+            console.log(length);
+            var nameListByID = '';
+            for (var j = 0; j < length; j++) {
+               // console.log(allResumes[j].id + ' ' + allResumes[j].name_first);
+                nameListByID += generateNameListByID(allResumes[j]);
+            }
+            console.log(nameListByID);
+            $('#resumeList').append(nameListByID); 
+        }
+    });
+
+
+
+
     $.ajax('api/resumes/51c208396b1642a626000001', {
         complete : function(response){
         var resume = response.responseJSON;
@@ -237,7 +301,7 @@ $(document).ready(function() {
 
 
 ///********* END CREATE FORM FIELDS ********/
-
+   
 
 ///********* BEGIN SUBMIT ********/
     $('#userDataForm').submit(function() {
@@ -321,19 +385,21 @@ $(document).ready(function() {
 
         console.log(userData);
 
-        //everytime you make a post
-        //  first key has to be JSON.stringify({'resume' : userData});
-        //  set up a getPath function so you don't have it all over the place.
-
         var postData = JSON.stringify({'resume' : userData});
         
         $.ajax({
             type : "POST",
             url : "/api/resumes",
-            data: postData
+            data: postData,
+            success: function(response){
+                            console.log(response);
+                            return false;
+                        }
+            
         });
 
-        return false;                                
-    });
 
+
+        return false; 
+    });
 });
