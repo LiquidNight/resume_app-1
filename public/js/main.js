@@ -15,8 +15,8 @@ function generateHTML(data, type) {
 function generateNameListByID(data) {
     var html = '';
     var dataID = data.id;
-    var deleteButton = '<button type="button" onclick="deleteRecord(\'' + dataID + '\')" class="btn ">Delete</button>'
-    var ViewButton = '<button type="button" onclick="viewRecord(\'' + dataID + '\')" class="btn ">View</button>'
+    var deleteButton = '<button type="button" onclick="deleteRecord(\'' + dataID + '\')" class="btn">Delete</button>'
+    var ViewButton = '<button type="button" onclick="viewRecord(\'' + dataID + '\')" class="btn">View</button>'
     
     html += '<li id="'+ data.id+'">'+data.name_first+ ' ' + data.name_last + ' ' +
                  deleteButton + ' ' + ViewButton + '</li>';
@@ -84,68 +84,19 @@ function deleteRecord(dataID) {
                         return false;
                     },
         fail: function(response){
-                        console.log("fail: I am currently hardcoded.");
+                        console.log("fail");
                         return false;
                     }
     });
 }
 
-/*
+
 function viewRecord(dataID) {
+
+    $('.clearContentsBeforeView').empty();
     var recordURL = "/api/resumes/" + dataID;
-    $.ajax({
-        type : "GET",
-        url : recordURL,
-        success: function(response){
-                        console.log("successfully got-ed");
-                        return false;
-                    },
-        fail: function(response){
-                        console.log("fail.");
-                        return false;
-                    }
-    });
-}
-*/
 
-/*
-Notes: 
-Create  POST    /api/resumes
-Read    GET     /api/resumes/51c208396b1642a626000001
-Update  PUT     /api/resumes/51c208396b1642a626000001
-Delete  DELETE  /api/resumes/51c208396b1642a626000001
-
-Read all of the resumes (objects) 
-        GET     /api/resumes
-
-*/
-
- 
-  
-
-
-$(document).ready(function() {
-   
-   $.ajax('api/resumes', {
-        complete : function(response){
-            var allResumes = response.responseJSON;
-            console.log(allResumes);
-            var length = allResumes.length;
-            console.log(length);
-            var nameListByID = '';
-            for (var j = 0; j < length; j++) {
-               // console.log(allResumes[j].id + ' ' + allResumes[j].name_first);
-                nameListByID += generateNameListByID(allResumes[j]);
-            }
-            console.log(nameListByID);
-            $('#resumeList').append(nameListByID); 
-        }
-    });
-
-
-
-
-    $.ajax('api/resumes/51c208396b1642a626000001', {
+    $.ajax(recordURL, {
         complete : function(response){
         var resume = response.responseJSON;
 
@@ -160,7 +111,7 @@ $(document).ready(function() {
         $('#street').html(resume.contact_info.street_address.street);
         $('#city').html(resume.contact_info.street_address.city);
         $('#zip_code').html(resume.contact_info.street_address.zip_code);
-    
+   
 /**************  BEGIN SKILLS     ********/       
         lengthOfSkillArray = resume.skill.length;
         for (var i = 0; i < lengthOfSkillArray; i++) {
@@ -265,7 +216,7 @@ $(document).ready(function() {
                     var title = resume.accomplishments[i].title; 
                     var month_year = resume.accomplishments[i].month_year; 
                     var description = resume.accomplishments[i].description; 
-                    
+                   
                     month_year = formatMonthYear(month_year);
                     var accomplishmentsDiv = generateHTML ({
                                             'title' : title,
@@ -279,6 +230,43 @@ $(document).ready(function() {
         }
 
     });
+} //end VIEW FUNCTION
+
+
+
+
+/*
+Notes: 
+Create  POST    /api/resumes
+Read    GET     /api/resumes/51c208396b1642a626000001
+Update  PUT     /api/resumes/51c208396b1642a626000001
+Delete  DELETE  /api/resumes/51c208396b1642a626000001
+
+Read all of the resumes (objects) 
+        GET     /api/resumes
+
+*/
+
+ 
+  
+
+
+$(document).ready(function() {
+    var dataID = '51cde6d76b16422382000065';
+
+   viewRecord(dataID);
+   $.ajax('api/resumes', {
+        complete : function(response){
+            var allResumes = response.responseJSON;
+            var length = allResumes.length;
+            var nameListByID = '';
+            for (var j = 0; j < length; j++) {
+                nameListByID += generateNameListByID(allResumes[j]);
+            }
+            $('#resumeList').append(nameListByID); 
+        }
+    });
+    
 ///********* BEGIN CREATE FORM FIELDS ********/
     $('.skill_block_add').click(function() {
        addABlock('.skill_block', '.skill_block_add');
@@ -384,6 +372,8 @@ $(document).ready(function() {
         });
 
         console.log(userData);
+
+
 
         var postData = JSON.stringify({'resume' : userData});
         
