@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>	
+        <title>Create a Profile </title>
+        <link rel="stylesheet" href="css/normalize.css"> 
+		<link rel="stylesheet" href="css/style.css">  
+        <link rel="stylesheet" href="css/bootstrap.css">
+
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+        <style>
+            fieldset {
+                margin: auto;
+                width: 85%;
+            } 
+
+             .myBlock {
+                display: none;
+            }
+        </style>
+	</head>
+	<body>
+        <div id="fb-root"></div>
+ <!--    <script>
+            window.fbAsyncInit = function() {
+                // init the FB JS SDK
+                FB.init({
+                  appId      : '563765890333626',                        // App ID from the app dashboard
+                 // channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel file for x-domain comms
+                  status     : true,                                 // Check Facebook Login status
+                  xfbml      : true                                  // Look for social plugins on the page
+                });
+
+                // Additional initialization code such as adding Event Listeners goes here
+
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        console.log('Welcome!  Fetching your information.... ');
+                        FB.api('/me', function(response) {
+                            //I entered this code
+                            $('#name').val(response.name);   //val is an overloaded method
+                            console.log('Good to see you, ' + response.name + '.');
+                            console.log(response);
+                        });
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                }, {
+                    //note - added this to increase the scope
+                    /*
+                    you can do this another way:  
+                        FB.login(function(response) {
+                        
+                        }, {scope: 'email,user_likes'});
+                    */
+                    scope: 'email,user_likes'
+                });
+            };
+
+            // Load the SDK asynchronously
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+          </script>
+-->
+        
+        <header><h1>Welcome</h1>
+        <nav>
+            <ul>
+                <li><a href="profilelist.html">List</a></li>
+                <li><a href="createprofile.html">Add</a></li>
+                <li><a href="viewprofile.html">View</a></li>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+        </header>
+        <div id="header_border" class="clearfix"></div>
+        <h1>Create a profile</h1>
+        <!--Form elements are considered inline block elements.
+                -Externally, they act like inline elements.
+                -Internally, you can set block like properties (height, width, etc...)
+        -->
+        <form  id='userDataForm' class="form-horizontal">
+            <fieldset>
+                <legend>Name</legend>
+                 <div class="control-group">
+                    <label class="control-label" for="input_name">Name</label>
+                    <div class="controls">
+                        <input id="input_name_first" class="input_name" type="text" placeholder="first name" />
+                        <input id="input_name_last" class="input_name" type="text" placeholder="last name" />
+                    </div>
+                </div>
+            </fieldset>
+        <div class="contact_info">
+            <fieldset>
+                <legend>Contact</legend>
+                <div class="control-group">
+                    <label class="control-label" for="input_phone">Phone</label>
+                    <div class="controls">
+                        <input id="input_phone" class="contact_info" type="text" placeholder="###-###-####" />
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label" for="input_email">Email</label>
+                    <div class="controls">
+                        <input id="input_email"  class="contact_info" type="text" placeholder="myemail@email.com" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="input_linked_in">LinkedIn</label>
+                    <div class="controls">
+                         <input id="input_linked_in" type="text" placeholder="linked in" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="input_twitter">Twitter</label>
+                    <div class="controls">
+                         <input id="input_twitter" type="text" placeholder="twitter handle" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="input_website">Website</label>
+                    <div class="controls">
+                         <input id="input_website" type="text" placeholder="mywebsite.com" />
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Address</legend>
+                <div class="control-group">
+                    <label class="control-label" for="input_address">Address</label>
+                    <div class="controls">
+                        <input id="input_street" class="input_address" type="text" placeholder="1234 Street St." />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                   <div class="controls">
+                        <input id="input_city" type="text" placeholder="Anycity" />
+                        <select id="input_state" class="input_address span1">
+                          <option>CA</option>
+                          <option>NM</option>
+                          <option>CT</option>
+                          <option>HI</option>
+                          <option>AZ</option>
+                        </select>
+                        <input id="input_zip_code"  class="input_address" type="text" placeholder="#####" />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Skills </legend>
+                <div class="skill_block">
+                    <div class="control-group">
+                        <label class="control-label" for="input_skill">Category</label>
+                        <div class="controls">
+                            <input class="input_category input_skill" type="text" placeholder="Technology" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_skill">Title</label>
+                        <div class="controls">
+                            <input class="input_skill_title input_skill" type="text" placeholder="Javascript" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_skill">Years of Experience</label>
+                        <div class="controls">
+                           <select class="input_skill_experience span1 input_skill">
+                              <option>0</option>
+                              <option>&lt;1</option>
+                              <option>1</option>
+                              <option>2</option>
+                              <option>3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <span class="help-block"><a href="#" class="skill_block_add">+ Add Skill</a></span>
+            </fieldset>
+    
+            <fieldset>
+                <legend>Work Experience </legend>
+                <div class="experience_block">
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Role</label>
+                        <div class="controls">
+                            <input class="input_role input_experience" type="text" placeholder="Painter" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Project</label>
+                        <div class="controls">
+                            <input class="input_project input_experience" type="text" placeholder="Mona Lisa" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Organization</label>
+                        <div class="controls">
+                            <input class="input_organization input_experience" type="text" placeholder="Louvre" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Location</label>
+                        <div class="controls">
+                            <input class="input_location input_experience" type="text" placeholder="Somewhere" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">Start Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_experience_start_month_year input_experience" name="input_experience_start_month_year">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_experience">End Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_experience_end_month_year input_experience" name="input_experience_end_month_year">
+                        </div>
+                    </div>
+                    <div class="control-group responsibility_block">
+                        <label class="control-label" for="input_experience">Responsibility</label>
+                        <div class="controls">
+                            <input class="input_responsibility input_experience" type="text" placeholder="responsibility" />
+                        </div>
+                    </div>
+                    
+                    <span class="help-block"><a href="#" class="responsibility_block_add">+ Add Responsibility</a></span>
+                </div>
+                <span class="help-block"><a href="#" class="experience_block_add">+ Add Experience</a></span>
+            </fieldset>
+
+            <fieldset>
+                <legend>Education</legend>
+                <div class="schools_block">
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">School</label>
+                        <div class="controls">
+                            <input class="input_school_name input_schools" type="text" placeholder="University of Sample" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">Degree</label>
+                        <div class="controls">
+                            <input class="input_degree input_schools" type="text" placeholder="Bachelor of Science" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">Major</label>
+                        <div class="controls">
+                            <input class="input_major input_schools" type="text" placeholder="Major" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">Minor</label>
+                        <div class="controls">
+                            <input class="input_minor input_schools" type="text" placeholder="minor" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">GPA</label>
+                        <div class="controls">
+                            <input class="input_gpa input_schools" type="text" placeholder="4.0" />
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">Start Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_schools_start_month_year input_schools" name="input_schools_start_month_year">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_schools">End Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_schools_end_month_year input_schools" name="input_schools_end_month_year">
+                        </div>
+                    </div>
+                </div>
+                <span class="help-block"><a href="#" class="schools_block_add">+ Add Education</a></span>
+            </fieldset>
+
+            <fieldset>
+                <legend>Accomplishments</legend>
+                <div class="accomplishments_block">
+                    <div class="control-group">
+                        <label class="control-label" for="input_accomplishments_title">Title</label>
+                        <div class="controls">
+                            <input class="input_accomplishments_title" type="text" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_accomplishments_month_year">Date</label>
+                        <div class="controls">
+                            <input type="month" class="input_accomplishments_month_year" name="input_accomplishments_date">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="input_accomplishments_description">Description</label>
+                        <div class="controls">
+                            <textarea rows="9"  class="input_accomplishments_description"></textarea>
+                        </div>                                              
+                    </div>
+                </div>
+                <span class="help-block"><a href="#" class="accomplishments_block_add">+ Add Accomplishment</a></span>
+            </fieldset>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" onclick="deleteRecord('51ccc7c36b1642ecfb00000e')" class="btn ">Delete</button>
+            </div>
+        </form>
+	</body>
+</html>
+

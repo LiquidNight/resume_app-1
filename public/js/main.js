@@ -12,7 +12,7 @@ function generateHTML(data, type) {
     return html;
 }
 
-function generateNameListByID(data) {
+function generateNameListByIDWithButtons(data) {
     var html = '';
     var dataID = data.id;
     var deleteButton = '<button type="button" onclick="deleteRecord(\'' + dataID + '\')" class="btn">Delete</button>'
@@ -20,6 +20,17 @@ function generateNameListByID(data) {
     
     html += '<li id="'+ data.id+'">'+data.name_first+ ' ' + data.name_last + ' ' +
                  deleteButton + ' ' + ViewButton + '</li>';
+    return html;
+
+  }
+
+function generateNameListByIDWithLinks(data) {
+
+    var html = '';
+    var dataID = data.id;
+    var viewLink = '<a href="/viewprofile.html?' + dataID + '">' 
+    html += '<li>'+ viewLink + data.name_first+ ' ' + data.name_last + '</a></li>';
+    console.log(html);
     return html;
 
   }
@@ -90,12 +101,44 @@ function deleteRecord(dataID) {
     });
 }
 
+function viewButtonList() {
+    $.ajax('api/resumes', {
+        complete : function(response){
+            var allResumes = response.responseJSON;
+            var length = allResumes.length;
+            var nameListByID = '';
+            for (var j = 0; j < length; j++) {
+                nameListByID += generateNameListByIDWithButtons(allResumes[j]);
+            }
+            $('#resumeButtonsList').append(nameListByID); 
+        }
+    });
+}
+
+function viewLinksList() {
+
+    $.ajax('api/resumes', {
+        complete : function(response){
+            var allResumes = response.responseJSON;
+            var length = allResumes.length;
+            var nameListByID = '';
+            for (var j = 0; j < length; j++) {
+                nameListByID += generateNameListByIDWithLinks(allResumes[j]);
+            }
+            $('#resumeLinksList').append(nameListByID); 
+        }
+    });
+}
 
 function viewRecord(dataID) {
+    if (typeof dataID == 'undefined') {
+        var recordURL = "/api/resumes/51cde6e16b16422382000097";
+console.log('Add code to grab first record here.');
+    } else {
+        var recordURL = "/api/resumes/" + dataID;
+    }
 
     $('.clearContentsBeforeView').empty();
-    var recordURL = "/api/resumes/" + dataID;
-
     $.ajax(recordURL, {
         complete : function(response){
         var resume = response.responseJSON;
@@ -247,25 +290,21 @@ Read all of the resumes (objects)
 
 */
 
- 
-  
-
-
 $(document).ready(function() {
-    var dataID = '51cde6d76b16422382000065';
+  // var dataID = '51cde6d76b16422382000065';
+   
+    var currentPath = window.location.pathname;
+    if (currentPath == '/viewprofile.html') {
+        var dataFromURL = window.location.search.split( "?" );
+        var dataID = dataFromURL[1];
+        viewRecord(dataID);
+        viewButtonList();
+    } else if (currentPath == '/profilelist.html') { 
+        viewLinksList();
 
-   viewRecord(dataID);
-   $.ajax('api/resumes', {
-        complete : function(response){
-            var allResumes = response.responseJSON;
-            var length = allResumes.length;
-            var nameListByID = '';
-            for (var j = 0; j < length; j++) {
-                nameListByID += generateNameListByID(allResumes[j]);
-            }
-            $('#resumeList').append(nameListByID); 
-        }
-    });
+    }
+   
+   
     
 ///********* BEGIN CREATE FORM FIELDS ********/
     $('.skill_block_add').click(function() {
