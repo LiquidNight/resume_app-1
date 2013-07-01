@@ -15,24 +15,22 @@ function generateHTML(data, type) {
 function generateNameListByIDWithButtons(data) {
     var html = '';
     var dataID = data.id;
-    var deleteButton = '<button type="button" onclick="deleteRecord(\'' + dataID + '\')" class="btn">Delete</button>'
-    var ViewButton = '<button type="button" onclick="viewRecord(\'' + dataID + '\')" class="btn">View</button>'
+    var deleteButton = '<button type="button" onclick="deleteRecord(\'' + dataID + '\')" class="btn-mini btn-primary">Delete</button>'
+    var viewButton = '<button type="button" onclick="viewRecord(\'' + dataID + '\')" class="btn-mini btn-primary">View</button>'
     
     html += '<li id="'+ data.id+'">'+data.name_first+ ' ' + data.name_last + ' ' +
-                 deleteButton + ' ' + ViewButton + '</li>';
+                 viewButton + ' ' + deleteButton + '</li>';
     return html;
 
   }
 
 function generateNameListByIDWithLinks(data) {
-
     var html = '';
     var dataID = data.id;
     var viewLink = '<a href="/viewprofile.html?' + dataID + '">' 
     html += '<li>'+ viewLink + data.name_first+ ' ' + data.name_last + '</a></li>';
     console.log(html);
     return html;
-
   }
 
 function formatMonthYear(date) {
@@ -106,17 +104,21 @@ function viewButtonList() {
         complete : function(response){
             var allResumes = response.responseJSON;
             var length = allResumes.length;
-            var nameListByID = '';
-            for (var j = 0; j < length; j++) {
-                nameListByID += generateNameListByIDWithButtons(allResumes[j]);
+            if (length > 0) {
+                generateIterateList(allResumes, length);
+                var nameListByID = '';
+                for (var j = 0; j < length; j++) {
+                    nameListByID += generateNameListByIDWithButtons(allResumes[j]);
+                }
+                $('#resumeButtonsList').append(nameListByID); 
+            } else {
+                $('#resumeButtonsList').append("<li>There are no matching profiles.</li>");
             }
-            $('#resumeButtonsList').append(nameListByID); 
         }
     });
 }
 
 function viewLinksList() {
-
     $.ajax('api/resumes', {
         complete : function(response){
             var allResumes = response.responseJSON;
@@ -128,6 +130,20 @@ function viewLinksList() {
             $('#resumeLinksList').append(nameListByID); 
         }
     });
+}
+
+function generateIterateHTML(dataID, symbol) {
+    var viewLink = '<a href="/viewprofile.html?' + dataID + '">' 
+    return ('<li>'+ viewLink + symbol + '</a></li>');  
+  }
+
+function generateIterateList(data, length) {
+    var firstLink = generateIterateHTML(data[0].id, '&lt;&lt;');
+    var previousLink = '<li></li>';
+    var nextLink = '<li></li>';
+    var lastLink = generateIterateHTML(data[length-1].id, '&gt;&gt;');
+    var appendList = firstLink + previousLink + nextLink + lastLink;
+    $('.iterateList').append(appendList);
 }
 
 function viewRecord(dataID) {
@@ -276,23 +292,7 @@ console.log('Add code to grab first record here.');
 } //end VIEW FUNCTION
 
 
-
-
-/*
-Notes: 
-Create  POST    /api/resumes
-Read    GET     /api/resumes/51c208396b1642a626000001
-Update  PUT     /api/resumes/51c208396b1642a626000001
-Delete  DELETE  /api/resumes/51c208396b1642a626000001
-
-Read all of the resumes (objects) 
-        GET     /api/resumes
-
-*/
-
 $(document).ready(function() {
-  // var dataID = '51cde6d76b16422382000065';
-   
     var currentPath = window.location.pathname;
     if (currentPath == '/viewprofile.html') {
         var dataFromURL = window.location.search.split( "?" );
@@ -301,11 +301,8 @@ $(document).ready(function() {
         viewButtonList();
     } else if (currentPath == '/profilelist.html') { 
         viewLinksList();
-
     }
    
-   
-    
 ///********* BEGIN CREATE FORM FIELDS ********/
     $('.skill_block_add').click(function() {
        addABlock('.skill_block', '.skill_block_add');
@@ -412,10 +409,7 @@ $(document).ready(function() {
 
         console.log(userData);
 
-
-
         var postData = JSON.stringify({'resume' : userData});
-        
         $.ajax({
             type : "POST",
             url : "/api/resumes",
@@ -423,12 +417,8 @@ $(document).ready(function() {
             success: function(response){
                             console.log(response);
                             return false;
-                        }
-            
+                        }   
         });
-
-
-
         return false; 
     });
 });

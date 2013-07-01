@@ -1,3 +1,21 @@
+/*
+color palette:
+Kuler sea side bear
+#F22738
+#164F73
+#89D9D1
+#F2EBC4
+#F28379
+
+or 
+Vintage California
+#248077
+#74AD8D
+#c82754
+#f7bb21
+#f9e2b7
+*/
+
 .clearfix:after {
     content: ".";
     display: block;
@@ -10,6 +28,8 @@
 #wrapper {
     width: 90%;
     margin: auto;
+    background-color: #59BCD4;
+
 }
 
 body div {
@@ -17,13 +37,21 @@ body div {
 }
 
 h1 {
-    font: bold 36px Georgia; 
+    font: bold 44px Palatino; 
     float: left;
     padding: 10px 20px;
+    color: #fff;
+}
+
+header {
+
+    background-color: #248077;
+    height: 250px;
 }
 
 nav {
     padding: 10px 20px;
+
 }
   
 nav li {
@@ -33,17 +61,31 @@ nav li {
     display: inline;
 }       
 
+header li a {  
+    color:#fff;
+    text-decoration:none;
+}
+
 li a {  
-    color:#000;
+    color:#fff;
     text-decoration:none;
 } 
 
 li a:hover {
-    color: #CC333F;
+    color: #164F73;
+}
+
+#resumeButtonsList {
+    text-align: right;
+    padding: 2px;
+}
+
+#resumeLinksList {
+    padding-left: 20px;
 }
 
 #header_border, #footer_border {
-    border-bottom: 2px solid #CC333F;
+  /*  border-bottom: 2px solid #CC333F; */
 } 
 
 #subheader {
@@ -76,7 +118,9 @@ li a:hover {
     width: 65%;
     padding-left: 2%;
     padding-right: 2%;
+    padding-top: 2%;
     float:left;
+    background-color: #59BCD4;
    
 }
 
@@ -137,8 +181,8 @@ li a:hover {
 #right_column {
     width: 28%;
     padding-left: 2%;
-    float:right;
-    
+    padding-top: 2%;
+    float:left;
 }
 
 #right_column h3 {
@@ -343,14 +387,14 @@ footer #copy {
 @media screen and (max-width: 770px) {
     #left_column {
         float: none;
-        width: 100%;
+        width: 96%;
         text-align: center;
-        
+        background-color: #F7BB21;
     }
 
     #right_column {
         float: none;
-        width: 100%;
+        width: 96%;
     }
 
     .name {
@@ -411,13 +455,13 @@ footer #copy {
 @media screen and (max-width: 450px) {
     #left_column {
         float: none;
-        width: 100%;
+        width: 96%;
         
     }
 
     #right_column {
         float: none;
-        width: 100%;
+        width: 96%;
     }
     h1 {
         font: bold 34px Georgia; 
